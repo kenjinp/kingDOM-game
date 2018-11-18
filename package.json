@@ -4,14 +4,17 @@
   "description": "What should we do with our lives?",
   "main": "index.js",
   "scripts": {
-    "dev": "parcel src/index.pug -p 8888"
+    "dev": "parcel src/index.pug -p 8888",
+    "test": "echo \"Warning: no test specified\" && exit 0",
+    "build": "parcel build src/index.pug"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "babel-core": "^6.26.3",
     "babel-plugin-transform-export-extensions": "^6.22.0",
     "node-sass": "^4.9.2",
-    "parcel-bundler": "^1.9.6",
+    "parcel-bundler": "^1.10.3",
     "pug": "^2.0.3",
     "typescript": "^2.9.2"
   },
