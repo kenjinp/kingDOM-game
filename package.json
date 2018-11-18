@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "parcel src/index.pug -p 8888",
     "test": "echo \"Warning: no test specified\" && exit 0",
-    "build": "parcel build src/index.pug"
+    "build": "parcel build src/index.pug --public-url 'latest'"
   },
   "author": "",
   "license": "ISC",
