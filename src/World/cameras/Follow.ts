@@ -7,10 +7,15 @@ class Follow extends ArcRotateCamera {
     // Create a FreeCamera, and set its position to (x:0, y:5, z:-10).
     super("Debug", 0, 0, 10, DEFAULT_POSITION, scene);
     this.cameraAcceleration = 0.005
-    this.maxCameraSpeed = 10
+    this.maxCameraSpeed = 1
     this.checkCollisions = true;
+    this.upperRadiusLimit = 15
+    this.lowerBetaLimit = 0.2
+    this.wheelDeltaPercentage = 0.005
     this.ellipsoid = new Vector3(1, 1, 1);
     this.checkCollisions = true;
+    this.speed = 0.005;
+    this.inertia = 0.5;
     // Positions the camera overwriting alpha, beta, radius
     this.setPosition(new BABYLON.Vector3(0, 10, 10));
   }

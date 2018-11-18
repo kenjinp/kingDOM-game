@@ -8,7 +8,7 @@ import emitter from "event-emitter";
 import consts from "../Controls/consts";
 import PlayerSprites from "./sprites";
 
-const DEFUALT_POS = new Vector3(0, 2, 0);
+const DEFUALT_POS = new Vector3(0, 1, 0);
 const SPEED_THRESHOLD = 0.02;
 
 //Local Axes
@@ -87,9 +87,7 @@ class Player {
     let myMaterial = new BABYLON.StandardMaterial("myMaterial", scene);
     this.collisionMesh.material = myMaterial;
     this.collisionMesh.material.wireframe = true;
-    this.collisionMesh.ellipsoid = new BABYLON.Vector3(0.5, 1.0, 0.5);
-    this.collisionMesh.ellipsoidOffset = new BABYLON.Vector3(0, 1.0, 0);
-    console.log(scene);
+    this.collisionMesh.physicsImpostor = new BABYLON.PhysicsImpostor(this.collisionMesh, BABYLON.PhysicsImpostor.BoxImpostor, { mass: 1, friction:0.05 }, scene);
     this.emitter = scene._emitter;
     let localOrigin = localAxes(2, scene);
     localOrigin.parent = this.collisionMesh;
@@ -125,8 +123,12 @@ class Player {
         this.idle(direction)
       }
       // this.collisionMesh.locallyTranslate(
-      //   new BABYLON.Vector3(-magnitude, 0, 0)
+      //   new BABYLON.Vector3(-magnitu
+      de, 0, 0)
       // );
+    });
+    this.emitter.on(consts.JUMP, ({ down }) => {
+      this.collisionMesh.physicsImpostor.applyImpulse(new BABYLON.Vector3(0,2,0), this.collisionMesh.position);
     });
     this.emitter.on(consts.DOWN, ({ down }) => {
       if (this.velocityZ < SPEED_THRESHOLD) {
@@ -156,6 +158,7 @@ class Player {
       //   new BABYLON.Vector3(magnitude, 0, 0)
       // );
     });
+    // this.collisionMesh.physicsImpostor.angularVelocity.scaleEqual(0);
     // this.velocityX += (velocityX * friction);
     // this.velocityZ += (velocityZ * friction);
   }
@@ -196,7 +199,7 @@ class Player {
 
   render(scene) {
     this.move()
-    // this.collisionMesh.lookAt(scene._camera.position);
+    // this.collisionMesh.lookAt(scene._cameras.follow.position);
     this._sprites.setPosition(this.collisionMesh.position);
   }
 }

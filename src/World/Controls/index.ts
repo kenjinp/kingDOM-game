@@ -16,6 +16,9 @@ class Controls {
       if (e.key == "d") {
         emitter.emit(consts.RIGHT, { down })
       }
+      if (e.key == " ") {
+        emitter.emit(consts.JUMP, { down })
+      }
     };
     document.onkeyup = e => {
       let down = false;
@@ -33,6 +36,12 @@ class Controls {
       }
       if (e.key == "t") {
         emitter.emit(consts.MENU)
+      }
+      if (e.key == "f") {
+        emitter.emit(consts.ACTION)
+      }
+      if (e.key == " ") {
+        emitter.emit(consts.JUMP, { down })
       }
     };
     document.onmousemove = e => {
