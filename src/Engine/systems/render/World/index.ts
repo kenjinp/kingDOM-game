@@ -1,5 +1,4 @@
 import BABYLON from "babylonjs"
-import emitter from "event-emitter"
 import Scene from "./Scene";
 import Controls from "./Controls";
 
@@ -11,18 +10,13 @@ class World {
 
   constructor (canvas: HTMLCanvasElement) {
     this._canvas = canvas;
-    this._emitter = new emitter();
     this._engine = new BABYLON.Engine(canvas, true);
-    this._scene = new Scene(this._engine, canvas, this._emitter);
-    this._controls = new Controls(canvas, this._emitter);
+    this._scene = new Scene(this._engine, canvas);
   }
 
-  render () {
-
-    // Run the render loop.
-    this._engine.runRenderLoop(() => {
-      this._scene.render();
-    });
+  render (entitiesToRender) {
+    this._scene.updateEntities(entitiesToRender);
+    this._scene.render();
 
     // TODO attach events elsewhere?
     window.addEventListener('resize', () => {
