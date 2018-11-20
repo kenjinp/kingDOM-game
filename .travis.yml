@@ -23,7 +23,7 @@ deploy:
     acl: public_read
     local_dir: dist
     upload-dir: latest
-  on:
-    tags: true
 after_deploy:
   - travis-ci-cloudfront-invalidation -a $AWS_KEY -s $AWS_SECRET -c $AWS_CLOUDFRONT_DIST_ID -i '/latest/*' -b $TRAVIS_BRANCH -p $TRAVIS_PULL_REQUEST -o 'master,stage'
+on:
+  tags: true
