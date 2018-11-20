@@ -7,7 +7,6 @@ script:
   - npm install -g travis-ci-cloudfront-invalidation
   - npm run build
 deploy:
-  # deploy to git tag path in s3 bucket
   - provider: s3
     access_key_id: $AWS_KEY
     secret_access_key: $AWS_SECRET
@@ -16,7 +15,7 @@ deploy:
     acl: public_read
     local_dir: dist
     upload-dir: $TRAVIS_TAG
-   - provider: s3
+  - provider: s3
     access_key_id: $AWS_KEY
     secret_access_key: $AWS_SECRET
     bucket: $S3_BUCKET
