@@ -16,8 +16,6 @@ deploy:
     acl: public_read
     local_dir: dist
     upload-dir: $TRAVIS_TAG
-    on:
-      tags: true
   # deploy to latest path in s3 bucket
    - provider: s3
     access_key_id: $AWS_KEY
@@ -31,4 +29,4 @@ deploy:
 after_deploy:
   - travis-ci-cloudfront-invalidation -a $AWS_KEY -s $AWS_SECRET -c $AWS_CLOUDFRONT_DIST_ID -i '/latest/*' -b $TRAVIS_BRANCH -p $TRAVIS_PULL_REQUEST -o 'master,stage'
 on:
-  branch: master
+  tags: true
