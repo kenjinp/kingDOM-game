@@ -1,15 +1,21 @@
-import World from "./World";
+import RenderSystem from "./RenderSystem";
 
-let canvas:HTMLCanvasElement = <HTMLCanvasElement>document.getElementById("game");
-let world = new World(canvas);
+export const RENDER_SYSTEM_FILTER_KEY = "renderable";
 
-export default function render (entities) {
-  // runs once per loop
-  // add entities
-  let entitiesToRender = entities.filter(entity =>
-    Object.keys(entity.components).indexOf("renderable") >= 0
-  )
-
-  // how can we make sure that the entities are itempotent on each render?
-  world.render(entitiesToRender);
+// Initialize on load
+const canvas:HTMLCanvasElement = <HTMLCanvasElement>document.getElementById("game");
+let renderWorld
+if (!canvas) {
+  renderWorld = new RenderSystem();
 }
+
+// Maybe listen to atomic update events, rather then updating every time?
+// Alternatively, maybe hash editions of an object, to prevent updating?
+// What about memCacheing?
+
+function renderSystem (entities: any[]) : void {
+  let renderableEntities = entities
+    .filter(entity => !!entity.components[RENDER_SYSTEM_FILTER_KEY]);
+  renderWorld.update(renderableEntities);
+}
+export default renderSystem;
