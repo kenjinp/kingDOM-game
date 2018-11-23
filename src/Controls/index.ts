@@ -26,8 +26,6 @@ class Controls {
       let { key } = e;
       let actionKeyword = controlMapping[key];
       if (actionKeyword) {
-        // TODO dispatch
-        // keyEmitter(types[key]);
         this.boundControlPressed({
           actionKeyword,
           direction

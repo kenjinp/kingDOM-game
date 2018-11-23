@@ -9,3 +9,7 @@ export const RIGHT = "RIGHT";
 export const MENU = "MENU";
 export const ACTION = "ACTION";
 export const JUMP = "JUMP";
+export const ARROW_UP = "ARROW_UP";
+export const ARROW_LEFT = "ARROW_LEFT";
+export const ARROW_DOWN = "ARROW_DOWN";
+export const ARROW_RIGHT = "ARROW_RIGHT";
