@@ -4,6 +4,7 @@ import grass from "../../../../../assets/items/grass.png";
 import helmet from "../../../../../assets/items/helmet.png";
 import pie from "../../../../../assets/items/pie.png";
 import tree from "../../../../../assets/items/tree.png";
+import treeMask from "../../../../../assets/items/tree-alpha-mask.png";
 
 export {
   potion,
@@ -11,5 +12,6 @@ export {
   grass,
   helmet,
   pie,
-  tree
+  tree,
+  treeMask
 }

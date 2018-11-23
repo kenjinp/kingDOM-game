@@ -59,7 +59,7 @@ class World {
     this.debugScene(scene);
 
 
-    // Remove if not
+    // Remove entities if not tracked
     // TODO
 
     // Update each entity

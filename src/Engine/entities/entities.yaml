@@ -5,8 +5,8 @@ entities:
   components:
     renderable:
       sprite:
-        asset: "dagger"
-      debug: true
+        asset: "potion"
+      # debug: true
       position:
         - 1
         - 1
