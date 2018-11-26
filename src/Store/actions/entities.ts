@@ -8,13 +8,13 @@ function addEntityAction(entity) {
 }
 function updateEntityAction(entity) {
   return {
-    type: types.ADD_ENTITY,
+    type: types.UPDATE_ENTITY,
     payload: entity
   };
 }
 function destroyEntityAction(id) {
   return {
-    type: types.ADD_ENTITY,
+    type: types.DESTROY_ENTITY,
     payload: id
   };
 }

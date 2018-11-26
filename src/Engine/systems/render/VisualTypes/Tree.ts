@@ -3,7 +3,6 @@ import Thing from "./Thing";
 import * as sprites from "../Sprites";
 
 class Tree extends Thing {
-
   constructor(entity) {
     super(entity);
 
@@ -20,22 +19,48 @@ class Tree extends Thing {
       console.warn(`There is no sprite asset with the name "${spriteAsset}"`);
     }
 
+    const alphaTest = 1;
+
     // Save sprites in a spriteManager
     let spriteMap = new THREE.TextureLoader().load(spriteAsset);
     let alphaMap = new THREE.TextureLoader().load(spriteMapAsset);
     // Make sure sprite is nice and blurry!
-    spriteMap.magFilter = THREE.NearestFilter
+    spriteMap.magFilter = THREE.NearestFilter;
     spriteMap.minFilter = THREE.NearestFilter;
-    let material = new THREE.MeshBasicMaterial({ map: spriteMap, alphaMap, opacity: 1, alphaTest: 0.5, transparent: true, depthWrite: false, side: THREE.DoubleSide });
-    let geometry = this.geometry = new THREE.PlaneGeometry(this.scaleFactor, this.scaleFactor, this.scaleFactor);
+    let material = new THREE.MeshBasicMaterial({
+      map: spriteMap,
+      alphaMap,
+      // opacity: 1,
+      alphaTest,
+      transparent: false,
+      // depthWrite: false,
+      side: THREE.DoubleSide
+    });
+    let geometry = (this.geometry = new THREE.PlaneGeometry(
+      this.scaleFactor,
+      this.scaleFactor,
+      this.scaleFactor
+    ));
     let mesh1 = new THREE.Mesh(geometry, material);
     this.add(mesh1);
 
-    // TODO fix the z fighting bullshit!
-    let material2 = new THREE.MeshBasicMaterial({ map: spriteMap, alphaMap, opacity: 1, alphaTest: 0.5, transparent: true, depthWrite: false, side: THREE.DoubleSide });
-    let geometry = this.geometry = new THREE.PlaneGeometry(this.scaleFactor, this.scaleFactor, this.scaleFactor);
+    // TODO fix the transparency fighting!
+    let material2 = new THREE.MeshBasicMaterial({
+      map: spriteMap,
+      alphaMap,
+      // opacity: 1,
+      alphaTest,
+      transparent: false,
+      // depthWrite: false,
+      side: THREE.DoubleSide
+    });
+    let geometry = (this.geometry = new THREE.PlaneGeometry(
+      this.scaleFactor,
+      this.scaleFactor,
+      this.scaleFactor
+    ));
     let mesh2 = new THREE.Mesh(geometry, material2);
-    mesh2.rotation.set(0, 90 * Math.PI / 180, 0)
+    mesh2.rotation.set(0, (90 * Math.PI) / 180, 0);
     this.add(mesh2);
   }
 

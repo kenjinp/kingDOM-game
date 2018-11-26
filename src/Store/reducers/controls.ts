@@ -12,7 +12,7 @@ export default function controls(state = {}, action) {
       } else {
         let newState = Object.assign({}, state);
         delete newState[actionKeyword];
-        return state;
+        return newState;
       }
     default:
       return state;
