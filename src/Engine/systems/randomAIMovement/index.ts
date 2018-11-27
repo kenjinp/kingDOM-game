@@ -3,6 +3,9 @@ const DEGTORAD = 0.01745327;
 // These should all be put somewhere localized like action types?
 export const SYSTEM_FILTER_KEY = "randomAIMovement";
 
+// TODO should this be done via a reducer?
+// As in UPDATE_ENTITY?
+// I think so
 function update() {
   return entity => {
     let componentData = entity.components[SYSTEM_FILTER_KEY];
@@ -14,7 +17,7 @@ function update() {
     }
     componentData.time += 0.01;
     if (componentData.time > componentData.stop) {
-      entity.rotation[1] = Math.random() * 360 * DEGTORAD;
+      entity.rotation[1] = Math.random() * 360;
       componentData.stop = componentData.time + Math.random() * 1;
     }
     entity.localPosition[2] += 0.01;

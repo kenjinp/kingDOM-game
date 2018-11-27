@@ -13,7 +13,7 @@ class Thing extends THREE.Object3D {
     super();
     this.entityData = entity;
     this.name = entity.id;
-    this.isEntity = "yes";
+    this.isEntity = true;
     let renderComponent = (this.renderComponent =
       entity.components[RENDER_SYSTEM_FILTER_KEY]);
     this.scaleFactor = renderComponent.scaleFactor || DEFAULT_DIMENSIONS;
@@ -79,12 +79,6 @@ class Thing extends THREE.Object3D {
         color: 0xffffff
       });
       let sprite = (this.sprite = new THREE.Sprite(spriteMaterial));
-
-      // Optional Centering Behavior
-      if (center && Array.isArray(center)) {
-        console.log("sprite center", center);
-        sprite.center = center;
-      }
       this.add(sprite);
     }
 
@@ -108,9 +102,42 @@ class Thing extends THREE.Object3D {
       ));
       this.add(debug);
     }
+    this.boundingBoxHelper = new THREE.BoundingBoxHelper(this, 0xff0000);
   }
 
-  update() {}
+  update() {
+    this.boundingBoxHelper.update();
+    // These should be subComponents?
+    // POSTITION
+    if (this.entityData.position && Array.isArray(this.entityData.position)) {
+      this.position.set(...this.entityData.position);
+    }
+
+    // These should be subComponents?
+    // ROTATION
+    if (this.entityData.rotation && Array.isArray(this.entityData.rotation)) {
+      // Convert to Eular
+      let axis = new THREE.Vector3(0, 1, 0)
+      this.rotateOnAxis(axis, (this.entityData.rotation[1] * Math.PI) / 180);
+      // this.entityData.rotation.forEach((rotationDeg, index) => {
+      //   let axis = new THREE.Vector3([index === 0 ? 1 : 0, index === 1 ? 1 : 0, index === 2 ? 1 : 0]);
+      //   this.rotateOnAxis(axis, (rotationDeg * Math.PI) / 180);
+      // });
+    }
+
+    // I dont like how I'm stacking all this behavior
+    // should be mixins by inheritance or so
+    // translation commands?
+    if (
+      this.entityData.localPosition &&
+      Array.isArray(this.entityData.localPosition)
+    ) {
+      // Convert to Eular
+      this.translateX(this.entityData.localPosition[0] * Math.PI) / 180)
+      this.translateY(this.entityData.localPosition[1] * Math.PI) / 180)
+      this.translateZ(this.entityData.localPosition[2] * Math.PI) / 180)
+    }
+  }
 }
 
 export default Thing;

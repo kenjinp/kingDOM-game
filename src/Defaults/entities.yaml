@@ -54,6 +54,10 @@ entities:
     type:
       - thing
       - ground
+    rotation:
+      - 90
+      - 0
+      - 0
     components:
       physics:
       renderable:
