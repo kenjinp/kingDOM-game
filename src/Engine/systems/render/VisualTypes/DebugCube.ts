@@ -13,12 +13,6 @@ class Visualization extends Thing {
     let mesh = (this.mesh = new THREE.Mesh(geometry, material));
     this.add(mesh);
   }
-
-  update() {
-    // this.rotation.x += 0.01;
-    // this.rotation.y += 0.02;
-    super.update();
-  }
 }
 
 export default Visualization;

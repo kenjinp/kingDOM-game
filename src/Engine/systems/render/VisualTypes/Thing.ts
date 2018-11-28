@@ -2,8 +2,13 @@ import * as THREE from "three";
 import { RENDER_SYSTEM_FILTER_KEY } from "../index";
 import * as sprites from "../Sprites";
 import { ADD_ENTITY } from "../../../../Store/types";
+import _ from "lodash";
 
 const DEFAULT_DIMENSIONS = 1;
+
+let debugOnce = _.once(function(msg) {
+  console.log(msg);
+});
 
 class Thing extends THREE.Object3D {
   public defaultScaleX = DEFAULT_DIMENSIONS;
@@ -102,40 +107,64 @@ class Thing extends THREE.Object3D {
       ));
       this.add(debug);
     }
-    this.boundingBoxHelper = new THREE.BoundingBoxHelper(this, 0xff0000);
+
+    var sphere = new THREE.SphereGeometry();
+    var object = new THREE.Mesh(sphere, new THREE.MeshBasicMaterial(0xff0000));
+    this.boxHelper = new THREE.BoxHelper(object, 0xffff00);
+    this.add(this.boxHelper);
+    // this.boundingBoxHelper = new THREE.BoundingBoxHelper(this, 0xff0000);
+    // this.add(this.boundingBoxHelper);
   }
 
   update() {
-    this.boundingBoxHelper.update();
+    this.boxHelper.update();
+    // this.boundingBoxHelper.update();
     // These should be subComponents?
     // POSTITION
-    if (this.entityData.position && Array.isArray(this.entityData.position)) {
-      this.position.set(...this.entityData.position);
-    }
+    // directional vector
+    // current pos + directional vector
+
+    // if (this.entityData.position && Array.isArray(this.entityData.position)) {
+    //   this.position.set(...this.entityData.position);
+    // }
 
     // These should be subComponents?
     // ROTATION
-    if (this.entityData.rotation && Array.isArray(this.entityData.rotation)) {
+    // if (this.entityData.rotation && Array.isArray(this.entityData.rotation)) {
+    //   this.entityData.rotation.forEach((rotationDeg, index) => {
+    //     let axis = new THREE.Vector3([index === 0 ? 1 : 0, index === 1 ? 1 : 0, index === 2 ? 1 : 0]);
+    //     this.rotateOnAxis(axis, (rotationDeg * Math.PI) / 180);
+    //   });
+    // }
+
+    // I dont like how I'm stacking all this behavior
+    // should be mixins by inheritance or so
+    // translation commands?
+    if (
+      this.entityData.positionDelta &&
+      Array.isArray(this.entityData.positionDelta)
+    ) {
+      debugOnce(this);
+      let clockDelta = this.parent.clock.getDelta();
       // Convert to Eular
-      let axis = new THREE.Vector3(0, 1, 0)
-      this.rotateOnAxis(axis, (this.entityData.rotation[1] * Math.PI) / 180);
-      // this.entityData.rotation.forEach((rotationDeg, index) => {
-      //   let axis = new THREE.Vector3([index === 0 ? 1 : 0, index === 1 ? 1 : 0, index === 2 ? 1 : 0]);
-      //   this.rotateOnAxis(axis, (rotationDeg * Math.PI) / 180);
-      // });
+      this.translateX(this.entityData.positionDelta[0] * clockDelta);
+      this.translateY(this.entityData.positionDelta[1] * clockDelta);
+      this.translateZ(this.entityData.positionDelta[2] * clockDelta);
     }
 
     // I dont like how I'm stacking all this behavior
     // should be mixins by inheritance or so
     // translation commands?
     if (
-      this.entityData.localPosition &&
-      Array.isArray(this.entityData.localPosition)
+      this.entityData.rotationDelta &&
+      Array.isArray(this.entityData.rotationDelta)
     ) {
+      debugOnce(this);
+      let clockDelta = this.parent.clock.getDelta();
       // Convert to Eular
-      this.translateX(this.entityData.localPosition[0] * Math.PI) / 180)
-      this.translateY(this.entityData.localPosition[1] * Math.PI) / 180)
-      this.translateZ(this.entityData.localPosition[2] * Math.PI) / 180)
+      this.rotateX(this.entityData.rotationDelta[0] * clockDelta);
+      this.rotateY(this.entityData.rotationDelta[1] * clockDelta);
+      this.rotateZ(this.entityData.rotationDelta[2] * clockDelta);
     }
   }
 }

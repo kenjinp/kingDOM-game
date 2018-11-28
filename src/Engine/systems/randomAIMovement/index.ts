@@ -20,7 +20,7 @@ function update() {
       entity.rotation[1] = Math.random() * 360;
       componentData.stop = componentData.time + Math.random() * 1;
     }
-    entity.localPosition[2] += 0.01;
+    entity.positionDelta[2] += 0.01;
   };
 }
 

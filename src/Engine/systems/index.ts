@@ -5,4 +5,4 @@ import randomAIMovement from "./randomAIMovement";
 
 // Just a simple list of the systems to be enacted on in order
 // via the game loop
-export default [keyDebugPopup, randomAIMovement, render];
+export default [keyDebugPopup, playerControl, randomAIMovement, render];

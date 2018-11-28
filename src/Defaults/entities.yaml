@@ -1,4 +1,15 @@
 entities:
+  - id: half-elf
+    type:
+      - thing
+    position:
+      - 5
+      - 1
+      - 5
+    components:
+      renderable:
+        sprite:
+          asset: "testHeroFront"
   - id: potion
     type:
       - thing
@@ -63,6 +74,13 @@ entities:
       renderable:
         debug: true
         scaleFactor: 50
+  - id: followCam
+    type:
+      - camera
+    components:
+      renderable:
+        activeCamera: true
+        following: "debugCube"
   - id: debugCube
     type:
       - thing
@@ -72,8 +90,11 @@ entities:
       - 2
       - 3
     components:
-      randomAIMovement:
-        key:
+      movement:
+        speed: 1
+      playerControl:
+        translationSpeed: 1
+        rotationSpeed: 10
       renderable:
         debug: true
         size: default
